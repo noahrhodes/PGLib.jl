@@ -1,0 +1,4 @@
+name = "PGLIB"
+uuid = "07a8691f-3d11-4330-951b-3c50f98338be"
+authors = ["Noah Rhodes <nrhodes@wisc.edu>"]
+version = "0.1.0"
