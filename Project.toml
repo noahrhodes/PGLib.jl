@@ -4,11 +4,11 @@ authors = ["Noah Rhodes <nrhodes@wisc.edu>"]
 version = "0.1.0"
 
 [deps]
+DataDeps = "124859b0-ceae-595e-8997-d05f6a7a8dfe"
 PowerModels = "c36e90e8-916a-50a6-bd94-075b64ef4655"
 
 [compat]
 PowerModels = ">= 0.18"
-
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

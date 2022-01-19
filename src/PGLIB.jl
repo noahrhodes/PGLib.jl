@@ -1,6 +1,9 @@
 module PGLIB
 
 using PowerModels
+using DataDeps
+
+include("data.jl")
 
 """
     `pglib(fname::AbstractString)`
@@ -10,24 +13,24 @@ using PowerModels
     contains the name, it will be opened.
 """
 function pglib(fname::AbstractString)
-    if isfile(joinpath(@__DIR__, "..", "data", fname))
-        case = PowerModels.parse_file(joinpath(@__DIR__, "..", "data", fname))
-    elseif isfile(joinpath(@__DIR__, "..", "data", "$fname.m"))
-        case = PowerModels.parse_file(joinpath(@__DIR__, "..", "data", "$fname.m"))
-    elseif isfile(joinpath(@__DIR__, "..", "data", "pglib_opf_$fname"))
+    if isfile(joinpath(datadep"PGLib_opf", fname))
+        case = PowerModels.parse_file(joinpath(datadep"PGLib_opf", fname))
+    elseif isfile(joinpath(datadep"PGLib_opf", "$fname.m"))
+        case = PowerModels.parse_file(joinpath(datadep"PGLib_opf", "$fname.m"))
+    elseif isfile(joinpath(datadep"PGLib_opf", "pglib_opf_$fname"))
         @info "opening case `pglib_opf_$fname`"
-        case = PowerModels.parse_file(joinpath(@__DIR__, "..", "data", "pglib_opf_$fname"))
-    elseif isfile(joinpath(@__DIR__, "..", "data", "pglib_opf_$fname.m"))
+        case = PowerModels.parse_file(joinpath(datadep"PGLib_opf", "pglib_opf_$fname"))
+    elseif isfile(joinpath(datadep"PGLib_opf", "pglib_opf_$fname.m"))
         @info "opening case `pglib_opf_$fname.m`"
-        case = PowerModels.parse_file(joinpath(@__DIR__, "..", "data", "pglib_opf_$fname.m"))
+        case = PowerModels.parse_file(joinpath(datadep"PGLib_opf", "pglib_opf_$fname.m"))
     else
         # if single case contains name
-        files = readdir(joinpath(@__DIR__, "..", "data"))
+        files = readdir(joinpath(datadep"PGLib_opf"))
         filtered_files = filter(x-> occursin(fname,x) , files)
         if length(filtered_files)==1
             file=filtered_files[1]
             @info "opening case `$file`"
-            case = PowerModels.parse_file(joinpath(@__DIR__, "..", "data", file))
+            case = PowerModels.parse_file(joinpath(datadep"PGLib_opf", file))
         else
             @warn "Case `$(fname)` was not found.  Try running `find_pglib_case(\"$fname\")` to find similar case names."
             return Dict{String,Any}()
@@ -56,7 +59,7 @@ end
     Find all pglib cases that contain `name`.
 """
 function find_pglib_case(name::AbstractString)
-    files = readdir(joinpath(@__DIR__, "..", "data"))
+    files = readdir(joinpath(datadep"PGLib_opf"))
     filtered_files = filter(x-> occursin(name,x) , files)
 
     return filtered_files
