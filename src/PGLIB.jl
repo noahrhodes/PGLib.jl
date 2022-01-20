@@ -1,4 +1,4 @@
-module PGLIB
+module PGLib
 
 using PowerModels
 using DataDeps

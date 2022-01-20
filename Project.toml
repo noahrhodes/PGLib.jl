@@ -1,4 +1,4 @@
-name = "PGLIB"
+name = "PGLib"
 uuid = "07a8691f-3d11-4330-951b-3c50f98338be"
 authors = ["Noah Rhodes <nrhodes@wisc.edu>"]
 version = "0.1.0"
@@ -9,6 +9,7 @@ PowerModels = "c36e90e8-916a-50a6-bd94-075b64ef4655"
 
 [compat]
 PowerModels = ">= 0.18"
+DataDeps = "~0.7"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

@@ -1,5 +1,5 @@
 
-using PGLIB
+using PGLib
 using PowerModels
 using DataDeps
 using Test

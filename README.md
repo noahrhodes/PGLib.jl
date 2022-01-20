@@ -1,11 +1,11 @@
-# PGLIB.jl
+# PGLib.jl
 
 Status:
 [![CI](https://github.com/noahrhodes/PGLib.jl/workflows/CI/badge.svg)](https://github.com/noahrhodes/PGLib.jl/actions?query=workflow%3ACI)
 [![codecov](https://codecov.io/gh/noahrhodes/PGLib.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/noahrhodes/PGLib.jl)
 </p>
 
-PGLIB.jl provides easy access to the [Optimal Power Flow benchmark library](https://github.com/power-grid-lib/pglib-opf) provided by the [IEEE PES Task Force on Benchmarks for Validation of Emerging Power System Algorithms](https://power-grid-lib.github.io/).
+PGLib.jl provides easy access to the [Optimal Power Flow benchmark library](https://github.com/power-grid-lib/pglib-opf) provided by the [IEEE PES Task Force on Benchmarks for Validation of Emerging Power System Algorithms](https://power-grid-lib.github.io/).
 
 ## Documentation
 
