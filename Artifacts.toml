@@ -1,0 +1,6 @@
+[PGLib_opf]
+git-tree-sha1 = "91f3110e356432d4e093502e8fa60d6dc97104d2"
+
+    [[PGLib_opf.download]]
+    sha256 = "9c53214a8b74d921a662235faeea234e3e2bfa7cf62619410e9ec52f4277c797"
+    url = "https://github.com/power-grid-lib/pglib-opf/archive/refs/tags/v21.07.tar.gz"
