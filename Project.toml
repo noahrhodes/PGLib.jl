@@ -8,8 +8,8 @@ Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
 PowerModels = "c36e90e8-916a-50a6-bd94-075b64ef4655"
 
 [compat]
-PowerModels = "0.18, 0.19"
-julia = "1"
+PowerModels = "~0.18, ~0.19"
+julia = "^1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
