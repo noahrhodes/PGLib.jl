@@ -1,10 +1,8 @@
 
 using PGLib
 using PowerModels
-using DataDeps
 using Test
 
-ENV["DATADEPS_ALWAYS_ACCEPT"] = true
 
 case = parse_file(joinpath("./pglib_opf_case3_lmbd.m"))
 
