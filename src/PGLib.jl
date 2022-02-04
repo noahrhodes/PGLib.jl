@@ -7,6 +7,18 @@ using Artifacts
 
 
 const PGLib_opf = joinpath(artifact"PGLib_opf","pglib-opf-21.07")
+const PGLib_opf_api = joinpath(artifact"PGLib_opf","pglib-opf-21.07","api")
+const PGLib_opf_sad = joinpath(artifact"PGLib_opf","pglib-opf-21.07","sad")
+
+function pglib(fname::AbstractString, variant::AbstractString)
+    if variant=="api"
+        return _pglib(fname,PGLib_opf_api)
+    elseif variant=="sad"
+        return _pglib(fname,PGLib_opf_sad)
+    else
+        @error "pglib variation $variant is not available."
+    end
+end
 
 
 """
@@ -17,16 +29,22 @@ const PGLib_opf = joinpath(artifact"PGLib_opf","pglib-opf-21.07")
     contains the name, it will be opened.
 """
 function pglib(fname::AbstractString)
-    if isfile(joinpath(PGLib_opf, fname))
-        case = PowerModels.parse_file(joinpath(PGLib_opf, fname))
-    elseif isfile(joinpath(PGLib_opf, "$fname.m"))
-        case = PowerModels.parse_file(joinpath(PGLib_opf, "$fname.m"))
-    elseif isfile(joinpath(PGLib_opf, "pglib_opf_$fname"))
+    return _pglib(fname,PGLib_opf)
+end
+
+
+""
+function _pglib(fname::AbstractString, path::AbstractString)
+    if isfile(joinpath(path, fname))
+        case = PowerModels.parse_file(joinpath(path, fname))
+    elseif isfile(joinpath(path, "$fname.m"))
+        case = PowerModels.parse_file(joinpath(path, "$fname.m"))
+    elseif isfile(joinpath(path, "pglib_opf_$fname"))
         @info "opening case `pglib_opf_$fname`"
-        case = PowerModels.parse_file(joinpath(PGLib_opf, "pglib_opf_$fname"))
-    elseif isfile(joinpath(PGLib_opf, "pglib_opf_$fname.m"))
+        case = PowerModels.parse_file(joinpath(path, "pglib_opf_$fname"))
+    elseif isfile(joinpath(path, "pglib_opf_$fname.m"))
         @info "opening case `pglib_opf_$fname.m`"
-        case = PowerModels.parse_file(joinpath(PGLib_opf, "pglib_opf_$fname.m"))
+        case = PowerModels.parse_file(joinpath(path, "pglib_opf_$fname.m"))
     else
         # if single case contains name
         files = readdir(joinpath(PGLib_opf))
@@ -43,6 +61,8 @@ function pglib(fname::AbstractString)
     return case
 end
 
+
+
 """
     `find_pglib_case()`
 
@@ -51,7 +71,6 @@ end
 function find_pglib_case()
     return find_pglib_case("")
 end
-
 
 ##TODO
 # - add sort on number of nodes (size)
@@ -63,8 +82,26 @@ end
     Find all pglib cases that contain `name`.
 """
 function find_pglib_case(name::AbstractString)
-    files = readdir(PGLib_opf)
-    filter!(x-> isfile(joinpath(PGLib_opf,x)) , files)  # filter for files
+    return _find_pglib_case(name, PGLib_opf)
+end
+
+
+""
+function find_pglib_case(name::AbstractString, variant::AbstractString)
+    if variant=="api"
+        return _find_pglib_case(name,PGLib_opf_api)
+    elseif variant=="sad"
+        return _find_pglib_case(name,PGLib_opf_sad)
+    else
+        @error "pglib variation $variant is not available."
+    end
+end
+
+
+""
+function _find_pglib_case(name::AbstractString, path::AbstractString)
+    files = readdir(path)
+    filter!(x-> isfile(joinpath(path,x)) , files)  # filter for files
     filter!(x-> splitext(x)[2]==".m" , files)           # filter for .m files
     filtered_files = filter(x-> occursin(name,x) , files)
 
