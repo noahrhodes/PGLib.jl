@@ -9,7 +9,7 @@ PGLib.jl provides easy access to the [Optimal Power Flow benchmark library](http
 
 ## Documentation
 
-`pglib(case_file)` opens the case file.  The case file can be approximate:
+`pglib(case_file)` opens the case file.  The case file name can be approximate:
 
 ```julia
  pglib("pglib_opf_case3_lmbd.m")  #full file name
@@ -36,4 +36,15 @@ julia> find_pglib_case("ieee")
 julia> find_pglib_case("500")
 1-element Vector{String}:
  "pglib_opf_case500_goc.m"
+ ```
+
+ Case variations can be found by including a second argument to specify the problem variation.
+ ```julia
+pglib("case3_lmbd","sad")
+pglib("case3_lmbd","api")
+```
+```julia
+julia> find_pglib_case("500","api")
+1-element Vector{String}:
+ "pglib_opf_case500_goc__api.m"
  ```
