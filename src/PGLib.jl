@@ -2,6 +2,7 @@ module PGLib
 
 using PowerModels
 using Artifacts
+using StringDistances
 
 # include("data.jl")
 
@@ -20,14 +21,6 @@ function pglib(fname::AbstractString, variant::AbstractString)
     end
 end
 
-
-"""
-    `pglib(fname::AbstractString)`
-
-    open a matpower case file from the IEEE PGlib opf libray.  If the exact file
-    cannot be found, then the cases will be filtered.  If a single case
-    contains the name, it will be opened.
-"""
 function pglib(fname::AbstractString)
     return _pglib(fname,PGLib_opf)
 end
@@ -35,32 +28,37 @@ end
 
 ""
 function _pglib(fname::AbstractString, path::AbstractString)
-    if isfile(joinpath(path, fname))
-        case = PowerModels.parse_file(joinpath(path, fname))
-    elseif isfile(joinpath(path, "$fname.m"))
-        case = PowerModels.parse_file(joinpath(path, "$fname.m"))
-    elseif isfile(joinpath(path, "pglib_opf_$fname"))
-        @info "opening case `pglib_opf_$fname`"
-        case = PowerModels.parse_file(joinpath(path, "pglib_opf_$fname"))
-    elseif isfile(joinpath(path, "pglib_opf_$fname.m"))
-        @info "opening case `pglib_opf_$fname.m`"
-        case = PowerModels.parse_file(joinpath(path, "pglib_opf_$fname.m"))
-    else
-        # if single case contains name
-        files = readdir(joinpath(PGLib_opf))
-        filtered_files = filter(x-> occursin(fname,x) , files)
-        if length(filtered_files)==1
-            file=filtered_files[1]
-            @info "opening case `$file`"
-            case = PowerModels.parse_file(joinpath(PGLib_opf, file))
-        else
-            @warn "Case `$(fname)` was not found.  Try running `find_pglib_case(\"$fname\")` to find similar case names."
-            return Dict{String,Any}()
+    files = readdir(joinpath(PGLib_opf))
+    filter!(f->isfile(joinpath(PGLib_opf,f)), files)
+    filter!(f->endswith(f,".m"), files)
+
+    filtered_files = filter(x-> occursin(fname,x) , files)
+
+    if length(filtered_files)==1 # if single case contains name
+        file=filtered_files[1]
+        @info "opening case `$file`"
+        case = PowerModels.parse_file(joinpath(PGLib_opf, file))
+    else # fuzzy string match search
+        dist = [evaluate(TokenMax(NMD(1)), fname, f) for f in files] #length(fname)
+        p = sortperm(dist)
+        dist = dist[p]
+        files = files[p]
+        count=0
+        warn_msg = "Unique case `$(fname)` was not found. Here are some similar case names to \"$fname\":\n"
+        for idx in eachindex(files)
+            if dist[idx] < 10 && count <= 10
+                warn_msg *= " - $(files[idx])\n"
+                count+=1
+            else
+                break
+            end
         end
+        warn_msg *= "You can also try running `find_pglib_case(\"$fname\")` to find explore matching case names."
+        @warn warn_msg
+        case=Dict{String,Any}()
     end
     return case
 end
-
 
 
 """
@@ -102,15 +100,12 @@ end
 function _find_pglib_case(name::AbstractString, path::AbstractString)
     files = readdir(path)
     filter!(x-> isfile(joinpath(path,x)) , files)  # filter for files
-    filter!(x-> splitext(x)[2]==".m" , files)           # filter for .m files
-    filtered_files = filter(x-> occursin(name,x) , files)
+    filter!(x->endswith(x,".m"), files)           # filter for .m files
 
+    filtered_files = filter(x-> occursin(name,x) , files) # exact match
     return filtered_files
 end
 
+
 include("export.jl")
-
 end # module
-
-
-
