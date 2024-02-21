@@ -1,7 +1,7 @@
 name = "PGLib"
 uuid = "07a8691f-3d11-4330-951b-3c50f98338be"
 authors = ["Noah Rhodes <nrhodes@wisc.edu>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
