@@ -26,8 +26,8 @@ case_sad = parse_file(joinpath("./pglib_opf_case3_lmbd.m"))
         @test ["pglib_opf_case3_lmbd.m"] == find_pglib_case("lmbd")
         @test ["pglib_opf_case3_lmbd__api.m"] == find_pglib_case("lmbd","api")
         @test ["pglib_opf_case3_lmbd__sad.m"] == find_pglib_case("lmbd","sad")
-        @test length(find_pglib_case()) == 59
-        @test length(find_pglib_case("","sad")) == 59
-        @test length(find_pglib_case("","api")) == 59
+        @test length(find_pglib_case()) == 66
+        @test length(find_pglib_case("","sad")) == 66
+        @test length(find_pglib_case("","api")) == 66
     end
 end

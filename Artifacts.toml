@@ -1,6 +1,6 @@
 [PGLib_opf]
-git-tree-sha1 = "91f3110e356432d4e093502e8fa60d6dc97104d2"
+git-tree-sha1 = "0e8968a89b6ad43910a8eda4ec30656add35cf91"
 
     [[PGLib_opf.download]]
-    sha256 = "9c53214a8b74d921a662235faeea234e3e2bfa7cf62619410e9ec52f4277c797"
-    url = "https://github.com/power-grid-lib/pglib-opf/archive/refs/tags/v21.07.tar.gz"
+    sha256 = "f1421ce22f0a7b9de8a8b2111776b496348220192ad24aace392c3bf608706c2"
+    url = "https://github.com/power-grid-lib/pglib-opf/archive/refs/tags/v23.07.tar.gz"
