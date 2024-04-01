@@ -6,9 +6,9 @@ using Artifacts
 # include("data.jl")
 
 
-const PGLib_opf = joinpath(artifact"PGLib_opf","pglib-opf-21.07")
-const PGLib_opf_api = joinpath(artifact"PGLib_opf","pglib-opf-21.07","api")
-const PGLib_opf_sad = joinpath(artifact"PGLib_opf","pglib-opf-21.07","sad")
+const PGLib_opf = joinpath(artifact"PGLib_opf","pglib-opf-23.07")
+const PGLib_opf_api = joinpath(artifact"PGLib_opf","pglib-opf-23.07","api")
+const PGLib_opf_sad = joinpath(artifact"PGLib_opf","pglib-opf-23.07","sad")
 
 function pglib(fname::AbstractString, variant::AbstractString)
     if variant=="api"
