@@ -6,8 +6,8 @@ using Test
 silence() #suppress PowerModels output
 
 case = parse_file(joinpath("./pglib_opf_case3_lmbd.m"))
-case_api = parse_file(joinpath("./pglib_opf_case3_lmbd.m"))
-case_sad = parse_file(joinpath("./pglib_opf_case3_lmbd.m"))
+case_api = parse_file(joinpath("./pglib_opf_case3_lmbd__api.m"))
+case_sad = parse_file(joinpath("./pglib_opf_case3_lmbd__sad.m"))
 
 
 @testset "pglib" begin
