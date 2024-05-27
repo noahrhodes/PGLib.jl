@@ -47,12 +47,12 @@ function _pglib(fname::AbstractString, path::AbstractString)
         case = PowerModels.parse_file(joinpath(path, "pglib_opf_$fname.m"))
     else
         # if single case contains name
-        files = readdir(joinpath(PGLib_opf))
+        files = readdir(joinpath(path))
         filtered_files = filter(x-> occursin(fname,x) , files)
         if length(filtered_files)==1
             file=filtered_files[1]
             @info "opening case `$file`"
-            case = PowerModels.parse_file(joinpath(PGLib_opf, file))
+            case = PowerModels.parse_file(joinpath(path, file))
         else
             @warn "Case `$(fname)` was not found.  Try running `find_pglib_case(\"$fname\")` to find similar case names."
             return Dict{String,Any}()
