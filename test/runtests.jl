@@ -32,7 +32,7 @@ case_sad = parse_file(joinpath("./pglib_opf_case3_lmbd__sad.m"))
     end
 
     @testset "parse filename for buses" begin
-        @test nbuses("pglib_opf_case3_lmbd.m") == 3
-        @test nbuses("pglib_opf_case2736sp_k.m") == 2736
+        @test pglib_buscount("pglib_opf_case3_lmbd.m") == 3
+        @test pglib_buscount("pglib_opf_case2736sp_k.m") == 2736
     end
 end
