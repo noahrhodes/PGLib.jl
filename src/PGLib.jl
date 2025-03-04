@@ -108,9 +108,32 @@ function _find_pglib_case(name::AbstractString, path::AbstractString)
     return filtered_files
 end
 
+"""
+    `nbuses(name::AbstractString)`
+
+    Return the number of buses, as indicated by the filename. The filename
+    should be the basename of the `.m` file, e.g. one of the strings returned
+    by `find_pglib_case`. The number of buses is interpreted to be the integer
+    immediately following the `"pglib_opf_case"` prefix.
+"""
+function pglib_buscount(name::AbstractString)
+    pglib_prefix = "pglib_opf_case"
+    preflen = length(pglib_prefix)
+    prefix = name[1:preflen]
+    case_name = name[preflen+1:end]
+    if prefix != pglib_prefix
+        @error "filename is missing the prefix \"pglib_opf_case\""
+    end
+    digit_len = 0
+    while digit_len + 1 <= length(case_name) && isdigit(case_name[digit_len + 1])
+        digit_len += 1
+    end
+    if digit_len == 0
+        @error "Invalid filename $name. Name must have format \"pglib_opf_case[0-9]+*\"."
+    end
+    return parse(Int, case_name[1:digit_len])
+end
+
 include("export.jl")
 
 end # module
-
-
-
