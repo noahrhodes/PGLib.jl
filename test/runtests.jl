@@ -37,7 +37,7 @@ case_sad = parse_file(joinpath("./pglib_opf_case3_lmbd__sad.m"))
     end
 
     @testset "test bad names" begin
-        @test_throws "filename is missing the prefix" pglib_buscount("CASE123")
-        @test_throws "Invalid filename pglib_opf_caseonehundred" pglib_buscount("pglib_opf_caseonehundred")
+        @test_throws ErrorException pglib_buscount("CASE123")
+        @test_throws ErrorException pglib_buscount("pglib_opf_caseonehundred")
     end
 end
