@@ -35,4 +35,9 @@ case_sad = parse_file(joinpath("./pglib_opf_case3_lmbd__sad.m"))
         @test pglib_buscount("pglib_opf_case3_lmbd.m") == 3
         @test pglib_buscount("pglib_opf_case2736sp_k.m") == 2736
     end
+
+    @testset "test bad names" begin
+        @test_throws ErrorException pglib_buscount("CASE123")
+        @test_throws ErrorException pglib_buscount("pglib_opf_caseonehundred")
+    end
 end
